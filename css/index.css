@@ -156,14 +156,92 @@ display: flex;
     font-size: 18px;
     text-transform: capitalize;
 }
-
 .view-btn a{
     text-decoration: none;
     color: white;
 
 }
-
 .view-btn:hover{
     cursor: pointer;
 }
 
+                        /* REGISTRATION PAGE */
+.register{
+    /* background-image: url("../img/houses/pixasquare-622732-unsplash.jpg"); */
+    background-color: #dbfbc3;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display:flex;
+    flex-direction: row;
+    /* padding: 1.69rem 5.63rem; */
+    height: 60rem;
+    justify-content: center;
+    align-items: center;
+}
+.register_content{
+    width: 39.94rem;
+    height: 39.68rem;
+    background-color: rgba(0,0, 0, 0.7);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.register_content h1{
+    text-transform: capitalize;
+    font-size: 50px;
+    width: 25.6rem;
+}
+.register_content p{
+    width: 19.6rem;
+    font-size: 24px;
+    margin-top: 0.63rem;
+    margin-right: 5.5rem;
+}
+                /* FORM STYLNG */
+.register_form{
+    padding: 2rem;
+    width: 25.44rem;
+    height: 39.68rem;
+    background: white;
+}
+
+.register_form h2 {
+    width: 21.24rem; 
+}
+.register_form hr{
+    border: 2px solid #7DBA21;
+    border-radius: 3px;
+    width: 6rem;
+    margin-bottom: 10px;
+}
+
+input[type= "text"], input[type= "password"],input[type= "email"], input[type= "password"]{
+    width: 21.24rem;
+    height: 2.81rem;
+    background-color: #C4C4C4;
+    border: 0;
+    margin-bottom: 0.63rem;
+    padding: 10px;
+}
+
+.register_form input[type="submit"]{
+    width: 21.24rem;
+    height: 2.81rem;
+    background-color: #7DBA21;
+    margin: 0.63rem 0;
+    border: 0;
+    color: #fff;
+}
+
+.register_form input[type="submit"]:hover{
+    cursor: pointer;
+    /* width: 21.99rem; */
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.register_form p{
+    font-size: 14px;
+}
