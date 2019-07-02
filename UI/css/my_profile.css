@@ -1,0 +1,54 @@
+/* .account-details{
+    width: 500px;
+} */
+.account, .password{
+    background-color: #F1F1F1;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0.5px 0.5px 2.5px 2.55px #F1F1F1;
+    width: 60%;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account_info_title, .password_title{
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0 15px 0;
+    text-transform: uppercase;
+}
+
+.account_details, .password_details{
+    display: flex;
+    justify-content: center;
+}
+.account-info, .password-info{
+    width: 400px;
+}
+
+.field-title{
+    padding: 0px 10px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.field-title p{
+    margin-right: 20px;
+    width: 200px;
+}
+
+.account-info_input, .password-info_input{
+    width: 350px;
+    padding: 0 5px;
+    height: 30px
+}
+
+.edit_btn{
+    margin-left: auto;
+    padding: 5px 10px;
+    background-color: #7DBA21;
+    color: #045E32;
+}
+
+/* CHANGE PASSWORD PAGE */
+
