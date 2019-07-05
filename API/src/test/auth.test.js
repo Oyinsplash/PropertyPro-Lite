@@ -7,7 +7,7 @@ import app from "../app";
 
 describe("Auth Route Endpoints", () => {
   describe("POST api/v1/auth/signup", () => {
-    it("should register a user successfully provided all the required data is provided", done => {
+    it("should signup a user successfully provided all the required data is provided", done => {
       request(app)
         .post("/api/v1/auth/signup")
         .send({
@@ -33,27 +33,7 @@ describe("Auth Route Endpoints", () => {
         })
         .end(done);
     });
-    it("should not register a user if all required data are not provided", done => {
-      request(app)
-        .post("/api/v1/auth/signup")
-        .send({
-          first_name: faker.name.firstName(),
-          last_name: faker.name.lastName(),
-          email: "",
-          phoneNumber: "",
-          password: faker.internet.password(),
-          confirm_password: faker.internet.password()
-        })
-        .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
-        .expect(400)
-        .expect(res => {
-          expect(res.body.status).to.equal("400 Invalid Request");
-          expect(res.body.data).to.have.all.keys("status", "error");
-        })
-        .end(done);
-    });
-    it("should not register a user if a required field contains invalid data", done => {
+    it("should not signup a user if a required field contains invalid data", done => {
       request(app)
         .post("/api/v1/auth/signup")
         .send({
@@ -73,7 +53,7 @@ describe("Auth Route Endpoints", () => {
         })
         .end(done);
     });
-    it("should not register a user if a required field contains invalid data", done => {
+    it("should not signup a user if a required field contains invalid data", done => {
       request(app)
         .post("/api/v1/auth/signup")
         .send({
@@ -93,7 +73,7 @@ describe("Auth Route Endpoints", () => {
         })
         .end(done);
     });
-    it("should not register a user if the data provided already exist in the database", done => {
+    it("should not signup a user if the data provided already exist in the database", done => {
       request(app)
         .post("/api/v1/auth/signup")
         .send({
@@ -112,6 +92,66 @@ describe("Auth Route Endpoints", () => {
           expect(res.body.data).to.have.all.keys("status", "error");
         })
         .end(done);
+    });
+  });
+
+  // signin Tests
+  describe("Auth Route Endpoints", () => {
+    describe("POST api/v1/auth/signin", () => {
+      it("should log a user in successfully when valid credentials are inputed", done => {
+        request(app)
+          .post("/api/v1/auth/signin")
+          .send({
+            email: "splash@yahoo.co.uk",
+            password: "abc123"
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(200)
+          .expect(res => {
+            expect(res.body.status).to.equal("Success");
+            expect(res.body.data).to.have.all.keys(
+              "id",
+              "first_name",
+              "last_name",
+              "email",
+              "token"
+            );
+          })
+          .end(done);
+      });
+      it("should not log a user in successfully when invalid credentials are inputed", done => {
+        request(app)
+          .post("/api/v1/auth/signin")
+          .send({
+            email: faker.internet.email(),
+            password: faker.internet.password()
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(401)
+          .expect(res => {
+            expect(res.body.status).to.equal("Success");
+            expect(res.body.data).to.have.all.keys("status", "error");
+          })
+          .end(done);
+      });
+      it("should not log a user in successfully if not all required credential is inputed", done => {
+        request(app)
+          .post("/api/v1/auth/signin")
+          .send({
+            email: '',
+            password: ''
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(401)
+          .expect(res => {
+            expect(res.body.status).to.equal("Success");
+            expect(res.body.data).to.have.all.keys("status", "error");
+          })
+          .end(done);
+      });      
     });
   });
 });
