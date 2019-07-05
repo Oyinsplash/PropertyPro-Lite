@@ -1,11 +1,21 @@
 import express from "express";
 import dotenv from "dotenv";
+import bodyparser from "body-parser";
+import authRoutes from "./routes/authRoutes";
 
 dotenv.config();
 
 // Create express app
 const app = express();
 
+// parse application/x-www-form-urlencoded
+app.use(bodyparser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyparser.json());
+
+// Routes
+app.use("/api/v1/auth", authRoutes);
 // Default route
 app.get("/api/v1", (req, res) => {
   res.status(200).json({
