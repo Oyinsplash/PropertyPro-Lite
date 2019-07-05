@@ -10,15 +10,16 @@ describe("Auth Route Endpoints", () => {
     it("should signup a user successfully provided all the required data is provided", done => {
       request(app)
         .post("/api/v1/auth/signup")
+        .set("Accept", "application/json")
         .send({
           first_name: "oyin",
           last_name: "splash",
           email: "splash@yahoo.co.uk",
           phoneNumber: "07033444447",
+          address: "23, Skye road, Lagos, Nigeria",
           password: "abc123",
           confirm_password: "abc123"
-        })
-        .set("Accept", "application/json")
+        }) 
         .expect("Content-Type", /json/)
         .expect(201)
         .expect(res => {
@@ -41,6 +42,7 @@ describe("Auth Route Endpoints", () => {
           last_name: faker.name.lastName(),
           email: "splash@yahoo",
           phoneNumber: "07033fg4447",
+          address: `${faker.address.streetAddress()}, Lagos, Nigeria`,
           password: faker.internet.password(),
           confirm_password: faker.internet.password()
         })
@@ -53,14 +55,15 @@ describe("Auth Route Endpoints", () => {
         })
         .end(done);
     });
-    it("should not signup a user if a required field contains invalid data", done => {
+    it("should not signup a user if not all required fields contain data", done => {
       request(app)
         .post("/api/v1/auth/signup")
         .send({
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          email: "splash@yahoo",
-          phoneNumber: "07033fg4447",
+          email: "",
+          phoneNumber: "",
+          address: "",
           password: faker.internet.password(),
           confirm_password: faker.internet.password()
         })
@@ -81,6 +84,7 @@ describe("Auth Route Endpoints", () => {
           last_name: faker.name.lastName(),
           email: "splash@yahoo",
           phoneNumber: "07033444447",
+          address: `${faker.address.streetAddress()}, Lagos, Nigeria`,
           password: "abc123",
           confirm_password: "abc123"
         })
@@ -140,8 +144,8 @@ describe("Auth Route Endpoints", () => {
         request(app)
           .post("/api/v1/auth/signin")
           .send({
-            email: '',
-            password: ''
+            email: "",
+            password: ""
           })
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
@@ -151,7 +155,7 @@ describe("Auth Route Endpoints", () => {
             expect(res.body.data).to.have.all.keys("status", "error");
           })
           .end(done);
-      });      
+      });
     });
   });
 });
