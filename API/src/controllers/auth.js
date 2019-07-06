@@ -6,7 +6,23 @@ class UserController {
   /* eslint camelcase: 0 */
   static async createAccount(req, res) {
     try {
-      const { first_name, last_name, email, phoneNumber, address, password } = req.body;
+      const {
+        first_name,
+        last_name,
+        email,
+        phoneNumber,
+        address,
+        password
+      } = req.body;
+
+      const isUserExist = users.find(
+        ({ email: currentEmail }) => email === currentEmail
+      );
+      if (isUserExist)
+        return res.status(409).json({
+          status: "409 Conflict",
+          error: "Email has been taken"
+        });
       let id = 0;
       if (users.length === 0) {
         id = 1;
