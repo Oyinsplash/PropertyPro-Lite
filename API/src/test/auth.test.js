@@ -19,7 +19,7 @@ describe("Auth Route Endpoints", () => {
           address: "23, Skye road, Lagos, Nigeria",
           password: "abc123",
           confirm_password: "abc123"
-        }) 
+        })
         .expect("Content-Type", /json/)
         .expect(201)
         .expect(res => {

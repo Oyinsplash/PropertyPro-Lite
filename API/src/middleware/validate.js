@@ -61,9 +61,32 @@ export default class Validator {
     ];
   }
 
+  static validateSignIn() {
+    return [
+      check("email")
+        .exists()
+        .withMessage("This is a required field")
+        .not()
+        .isEmpty()
+        .withMessage("This field can not be left empty")
+        .normalizeEmail()
+        .isEmail()
+        .withMessage("Please enter a valid email address and password"),
+      check("password")
+        .exists()
+        .withMessage("This is a required field")
+        .not()
+        .isEmpty()
+        .withMessage("This field can not be left empty")
+        .isLength({ min: 5 })
+        .withMessage("Password should be at least 6 letters long")
+        .trim()
+        .escape()
+    ];
+  }
+
   static async myValidationResult(req, res, next) {
     const errors = validationResult(req);
-    console.log(errors.array());
     if (!errors.isEmpty()) {
       return res.status(400).json({
         status: "400 Invalid Request",
