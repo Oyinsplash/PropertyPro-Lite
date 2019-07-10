@@ -11,4 +11,11 @@ router.post(
   UserController.createAccount
 );
 
+router.post(
+  "/signin",
+  Validator.validateSignIn(),
+  Validator.myValidationResult,
+  UserController.loginAccount
+);
+
 export default router;

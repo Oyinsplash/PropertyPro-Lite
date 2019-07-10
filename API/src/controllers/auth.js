@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+// import { read } from "fs";
 import users from "../data/users";
 import Helpers from "../helpers/helpers";
 
@@ -15,10 +16,10 @@ class UserController {
         password
       } = req.body;
 
-      const isUserExist = users.find(
+      const userExist = users.find(
         ({ email: currentEmail }) => email === currentEmail
       );
-      if (isUserExist)
+      if (userExist)
         return res.status(409).json({
           status: "409 Conflict",
           error: "Email has been taken"
@@ -56,7 +57,52 @@ class UserController {
     } catch (e) {
       return res.status(500).json({
         status: "500 Server Error",
-        error: "Something went wrong, Please try again soon"
+        error: "Something went wrong, Please try again soon."
+      });
+    }
+  }
+
+  //  Signin
+  static async loginAccount(req, res) {
+    try {
+      const { email, password } = req.body;
+
+      const userExist = users.find(
+        ({ email: currentEmail }) => email === currentEmail
+      );
+      if (!userExist) {
+        return res.status(401).json({
+          status: "401 Unauthorized",
+          error: "Access is denied due to invalid credentials."
+        });
+      }
+      const validPassword = await bcrypt.compare(password, userExist.password);
+      if (!validPassword) {
+        return res.status(401).json({
+          status: "401 Unauthorized",
+          error: "Access is denied due to invalid credentials."
+        });
+      }
+      const { id, first_name, last_name, isAdmin } = userExist;
+      const token = Helpers.generateToken({
+        id,
+        isAdmin
+      });
+      return res.status(200).json({
+        status: "Success",
+        data: {
+          token,
+          id,
+          first_name,
+          last_name,
+          email
+        }
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: "500 Internal Server Error",
+        error:
+          "The server encountered an internal error or misconfiguration and was unable to complete your request."
       });
     }
   }
