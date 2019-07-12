@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-// import { read } from "fs";
 import users from "../data/users";
 import Helpers from "../helpers/helpers";
 
@@ -84,10 +83,7 @@ class UserController {
         });
       }
       const { id, first_name, last_name, isAdmin } = userExist;
-      const token = Helpers.generateToken({
-        id,
-        isAdmin
-      });
+      const token = Helpers.generateToken(id, isAdmin);
       return res.status(200).json({
         status: "Success",
         data: {

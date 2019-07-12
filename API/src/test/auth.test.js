@@ -6,6 +6,7 @@ import app from "../app";
 // Authentication route unit test
 
 describe("Auth Route Endpoints", () => {
+  // Signup
   describe("POST api/v1/auth/signup", () => {
     it("should signup a user successfully provided all the required data is provided", done => {
       request(app)
@@ -135,7 +136,7 @@ describe("Auth Route Endpoints", () => {
           .expect("Content-Type", /json/)
           .expect(401)
           .expect(res => {
-            expect(res.body.status).to.equal("Success");
+            expect(res.body.status).to.equal("401 Unauthorized");
             expect(res.body.data).to.have.all.keys("status", "error");
           })
           .end(done);
@@ -151,7 +152,7 @@ describe("Auth Route Endpoints", () => {
           .expect("Content-Type", /json/)
           .expect(401)
           .expect(res => {
-            expect(res.body.status).to.equal("Success");
+            expect(res.body.status).to.equal("401 Unauthorized");
             expect(res.body.data).to.have.all.keys("status", "error");
           })
           .end(done);
