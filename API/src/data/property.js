@@ -9,7 +9,7 @@ const properties = [
     city: "Surulere",
     address: "7, Shonde Street Off Odubiyi",
     type: "4 bedroom flat",
-    image_url: faker.image.imageUrl(),
+    image_url: 'https://res.cloudinary.com/ppropertypro-lite/image/upload/v1562519617/property/images/gbws7csjxykasla7g3wk.png',
     purpose: "For Rent",
     status: "Available",
     created_on: new Date().toLocaleString()
@@ -34,7 +34,7 @@ const properties = [
     state: "Lagos",
     city: "Surulere",
     address: "5, Aborishade Street",
-    type: "miniflat",
+    type: "Mini flat",
     image_url: faker.image.imageUrl(),
     purpose: "For Rent",
     status: "Available",
