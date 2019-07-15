@@ -90,7 +90,7 @@ describe("Property Route Endpoints", () => {
         .field("purpose", "For Rent")
         .attach(
           "image",
-          path.resolve(__dirname, "../../../UI/assets/images/pic.jeg")
+          path.resolve(__dirname, "../../../UI/img/houses/1.jeg")
         )
         .set("Connection", "keep-alive")
         .set("Authorization", validToken)
