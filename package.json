@@ -7,7 +7,8 @@
     "test": "mocha ./API/src/test/*.test.js -r @babel/register --exit true",
     "start": "node ./API/lib/app.js",
     "start-dev": "nodemon --exec babel-node ./API/src/app.js",
-    "build": "babel ./API/src -d ./API/lib"
+    "build": "babel ./API/src -d ./API/lib",
+    "migrations": "babel-node ./API/src/data/database/migrations.js"
   },
   "repository": {
     "type": "git",
@@ -43,7 +44,8 @@
     "express-validator": "^6.1.1",
     "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "pg": "^7.11.0"
   },
   "bugs": {
     "url": "https://github.com/Oyinsplash/PropertyPro-Lite/issues"
