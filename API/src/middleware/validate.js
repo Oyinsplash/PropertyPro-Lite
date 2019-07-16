@@ -1,4 +1,5 @@
 import { check, validationResult } from "express-validator";
+// import { states, status, type } from "../helpers/propertyInfo";
 
 export default class Validator {
   static validateSignUp() {
@@ -23,7 +24,7 @@ export default class Validator {
         .withMessage("This field can not be left empty")
         .isEmail()
         .withMessage("Please enter a valid email address"),
-      check("phoneNumber")
+      check("phone_number")
         .exists()
         .withMessage("This is a required field")
         .not()
@@ -84,13 +85,71 @@ export default class Validator {
         .escape()
     ];
   }
+  // static validatePostProperty() {
+  //   return [
+  //     check('price')
+  //      .exists()
+  //      .withMessage('Field is Required')
+  //      .not()
+  //      .isEmpty()
+  //      .withMessage('Field cannot be empty')
+  //      .isLength({ min: 4, max: 15 })
+  //      .withMessage('characters should be between 4-15 long')
+  //      .trim()
+  //      .matches(/^\d+(\.|\d)\d+$/)
+  //      .withMessage('should be either a number or float')
+  //      .escape()
+  //     check('state')
+  //      .exists()
+  //      .withMessage('Field is Required')
+  //      .not()
+  //      .isEmpty()
+  //      .withMessage('Field cannot be empty')
+  //      .isIn([...states])
+  //      .withMessage('')
+  //      .trim(),
+  //     check('city')
+  //      .exists()
+  //      .withMessage('Field is Required')
+  //      .not()
+  //      .isEmpty()
+  //      .withMessage('Field cannot be empty')
+  //      .isAlpha()
+  //      .withMessage('Should be Alphabets only')
+  //      .trim()
+  //      .isLength({ min: 3 })
+  //      .withMessage('Input should be atleast 3 characters long')
+  //      .escape(),
+  //     check('address')
+  //      .exists()
+  //      .withMessage('Field is Required')
+  //      .not()
+  //      .isEmpty()
+  //      .withMessage('Field cannot be empty')
+  //      .isLength({ min: 5 })
+  //      .withMessage('Input should be atleast 3 characters long')
+  //      .trim()
+  //      .escape(),
+  //     check('type')
+  //      .exists()
+  //      .withMessage('Field is Required')
+  //      .not()
+  //      .isEmpty()
+  //      .withMessage('Field cannot be empty')
+  //      .isIn([...type])
+  //      .withMessage('')
+  //      .trim()
+  //   ];
+  // }
 
   static async myValidationResult(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      const errArray = errors.array().map(({ msg }) => msg);
       return res.status(400).json({
         status: "400 Invalid Request",
-        error: "Your request contains invalid parameters"
+        error: "Your request contains invalid parameters",
+        errors: errArray
       });
     }
     return next();

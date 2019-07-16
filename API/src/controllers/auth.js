@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import users from "../data/users";
 import Helpers from "../helpers/helpers";
+import tokenValidator from "../middleware/validateToken";
 
 class UserController {
   /* eslint camelcase: 0 */
@@ -10,7 +11,7 @@ class UserController {
         first_name,
         last_name,
         email,
-        phoneNumber,
+        phone_number,
         address,
         password
       } = req.body;
@@ -21,7 +22,7 @@ class UserController {
       if (userExist)
         return res.status(409).json({
           status: "409 Conflict",
-          error: "Email has been taken"
+          error: "Email Already Exists"
         });
       let id = 0;
       if (users.length === 0) {
@@ -30,15 +31,15 @@ class UserController {
         const lastIndex = users.length - 1;
         id = users[lastIndex].id + 1;
       }
-      const passwordHash = await bcrypt.hash(password, 8);
+      const password_hash = await bcrypt.hash(password, 8);
       const user = {
         id,
         first_name,
         last_name,
         email,
-        phoneNumber,
+        phone_number,
         address,
-        password: passwordHash,
+        password: password_hash,
         is_admin: false
       };
       users.push(user);
@@ -50,12 +51,14 @@ class UserController {
           id,
           first_name,
           last_name,
-          email
+          email,
+          phone_number,
+          address
         }
       });
-    } catch (e) {
+    } catch (err) {
       return res.status(500).json({
-        status: "500 Server Error",
+        status: "500 Server Internal Error",
         error: "Something went wrong, Please try again soon."
       });
     }
@@ -79,11 +82,11 @@ class UserController {
       if (!validPassword) {
         return res.status(401).json({
           status: "401 Unauthorized",
-          error: "Access is denied due to invalid credentials."
+          error: "Access is denied due to invalid credentials, check and try again."
         });
       }
-      const { id, first_name, last_name, isAdmin } = userExist;
-      const token = Helpers.generateToken(id, isAdmin);
+      const { id, first_name, last_name, is_admin } = userExist;
+      const token = Helpers.generateToken(id, is_admin);
       return res.status(200).json({
         status: "Success",
         data: {
@@ -91,7 +94,8 @@ class UserController {
           id,
           first_name,
           last_name,
-          email
+          email,
+          is_admin
         }
       });
     } catch (e) {
