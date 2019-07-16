@@ -41,11 +41,12 @@ const state = [
 const type = [
   "2 bedroom",
   "3 bedroom",
+  "4 bedroom",
   "Duplex",
   "twin Duplex",
   "Commercial Property",
-  "Land",
-  "others"
+  "Office Space",
+  "Land"
 ];
 
 const status = ["Available", "Sold", "Rented"];

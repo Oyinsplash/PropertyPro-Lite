@@ -16,7 +16,7 @@ describe("Auth Route Endpoints", () => {
           first_name: "oyin",
           last_name: "splash",
           email: "splash@yahoo.co.uk",
-          phoneNumber: "07033444447",
+          phone_number: "07033444447",
           address: "23, Skye road, Lagos, Nigeria",
           password: "abc123",
           confirm_password: "abc123"
@@ -42,7 +42,7 @@ describe("Auth Route Endpoints", () => {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
           email: "splash@yahoo",
-          phoneNumber: "07033fg4447",
+          phone_number: "07033fg4447",
           address: `${faker.address.streetAddress()}, Lagos, Nigeria`,
           password: faker.internet.password(),
           confirm_password: faker.internet.password()
@@ -63,7 +63,7 @@ describe("Auth Route Endpoints", () => {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
           email: "",
-          phoneNumber: "",
+          phone_number: "",
           address: "",
           password: faker.internet.password(),
           confirm_password: faker.internet.password()
@@ -84,7 +84,7 @@ describe("Auth Route Endpoints", () => {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
           email: "splash@yahoo",
-          phoneNumber: "07033444447",
+          phone_number: "07033444447",
           address: `${faker.address.streetAddress()}, Lagos, Nigeria`,
           password: "abc123",
           confirm_password: "abc123"

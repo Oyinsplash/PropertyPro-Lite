@@ -12,10 +12,11 @@ const tokenValidator = (req, res, next) => {
   jwt.verify(token, process.env.SECRET, (error, result) => {
     if (error)
       return res.status(401).json({
-        status: "401 unaithorized",
-        error: "Token is Required"
+        status: "401 unauthorized",
+        error: "Invalid Token"
       });
-    req.data = result;
+    const {id, is_admin} = result;
+    req.data = {id, is_admin};
     return next();
   });
 };

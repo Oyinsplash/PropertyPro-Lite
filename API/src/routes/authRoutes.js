@@ -13,8 +13,8 @@ router.post(
 
 router.post(
   "/signin",
-  Validator.validateSignIn(),
-  Validator.myValidationResult,
+  // Validator.validateSignIn(),
+  // Validator.myValidationResult,
   UserController.loginAccount
 );
 
