@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import users from "../data/users";
+// import users from "../data/users";
 import Helpers from "../helpers/helpers";
-import tokenValidator from "../middleware/validateToken";
+// import tokenValidator from "../middleware/validateToken";
 import User from "../model/user";
 
 class UserController {
@@ -65,16 +65,17 @@ class UserController {
     try {
       const { email, password } = req.body;
 
-      const userExist = User.AddUser.find(
-        ({ email: currentEmail }) => email === currentEmail
-      );
+      const userExist = await User.searchByEmail(email);
       if (!userExist) {
         return res.status(401).json({
           status: "401 Unauthorized",
           error: "Access is denied due to invalid credentials."
         });
       }
-      const validPassword = await bcrypt.compare(password, userExist.password);
+      const validPassword = await bcrypt.compare(
+        password,
+        userExist.password_hash
+      );
       if (!validPassword) {
         return res.status(401).json({
           status: "401 Unauthorized",
@@ -86,6 +87,7 @@ class UserController {
       const token = Helpers.generateToken(id, is_admin);
       return res.status(200).json({
         status: "Success",
+        message: `Welcome ${first_name}, you have successfully logged in`,
         data: {
           token,
           id,
@@ -96,10 +98,10 @@ class UserController {
         }
       });
     } catch (e) {
+      console.log(e.stack);
       return res.status(500).json({
         status: "500 Internal Server Error",
-        error:
-          "The server encountered an internal error or misconfiguration and was unable to complete your request."
+        error: "Something went wrong, Please try again soon."
       });
     }
   }
