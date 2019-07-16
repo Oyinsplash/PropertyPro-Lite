@@ -96,4 +96,5 @@ export default class ValidateProperty {
     }
     return next();
   }
+  
 }

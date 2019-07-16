@@ -10,6 +10,7 @@ class Helpers {
     });
     return token;
   }
+
 }
 
 export default Helpers;
