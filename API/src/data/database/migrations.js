@@ -7,15 +7,15 @@ const createTables = async () => {
   const tables = `
     DROP TABLE IF EXISTS users CASCADE;
     CREATE TABLE IF NOT EXISTS users(
-        ID serial PRIMARY KEY,
-        first_name VARCHAR(30) NOT NULL,
-        last_name VARCHAR(30) NOT NULL,
-        email VARCHAR(60) NOT NULL UNIQUE,
-        phone_number VARCHAR NOT NULL,
-        address VARCHAR NOT NULL,
-        password_hash VARCHAR(65) NOT NULL,
+        ID serial NOT NULL PRIMARY KEY,
+        first_name VARCHAR(128) NOT NULL,
+        last_name VARCHAR(128) NOT NULL,
+        email VARCHAR(128) UNIQUE NOT NULL,
+        phone_number BIGINT NOT NULL,
+        address VARCHAR(128) NOT NULL,
+        password_hash VARCHAR(355) NOT NULL,
         is_admin BOOLEAN NOT NULL DEFAULT (false),
-        created_on TIMESTAMP NOT NULL DEFAULT NOW()
+        created_on TIMESTAMP NOT NULL DEFAULT (NOW())
     );
 
     DROP TABLE IF EXISTS properties CASCADE;

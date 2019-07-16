@@ -1,33 +1,33 @@
+import db from "../data/database/index";
+
 class User {
   static async AddUser(
     first_name,
     last_name,
     email,
-    hashed_password,
+    password_hash,
     phone_number,
-    address,
-    is_admin
+    address
   ) {
     const table = `INSERT INTO
-            users(first_name, last_name,email, hashed_password, phone_number, address, is_admin)
-            VALUES($1, $2, $3, $4, $5, $6, $7)
+            users(first_name, last_name, email, password_hash, phone_number, address)
+            VALUES($1, $2, $3, $4, $5, $6)
             returning *`;
     const values = [
       first_name,
       last_name,
       email,
-      hashed_password,
+      password_hash,
       phone_number,
-      address,
-      is_admin
+      address
     ];
     const { rows } = await db.query(table, values);
     return rows[0];
   }
 
   static async searchByEmail(email) {
-    const query = `
-          SELECT * FROM users WHERE id = $1
+    const table = `
+          SELECT * FROM users WHERE email = $1
       `;
     const values = [email];
     const { rows } = await db.query(table, values);
@@ -35,7 +35,7 @@ class User {
   }
 
   static async searchById(id) {
-    const query = `
+    const table = `
           SELECT * FROM users WHERE id = $1
     `;
     const values = [id];

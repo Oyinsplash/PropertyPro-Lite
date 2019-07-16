@@ -4,7 +4,19 @@ import { check, validationResult } from "express-validator";
 export default class Validator {
   static validateSignUp() {
     return [
-      check(["first_name", "last_name"])
+      check("first_name")
+        .exists()
+        .withMessage("This is a required field")
+        .not()
+        .isEmpty()
+        .withMessage("This field can not be left empty")
+        .isAlpha()
+        .withMessage("This field takes only alphabets")
+        .isLength({ min: 2 })
+        .withMessage("Name should be at least 2 letters long")
+        .trim()
+        .escape(),
+      check("last_name")
         .exists()
         .withMessage("This is a required field")
         .not()
@@ -17,13 +29,10 @@ export default class Validator {
         .trim()
         .escape(),
       check("email")
-        .exists()
-        .withMessage("This is a required field")
-        .not()
-        .isEmpty()
-        .withMessage("This field can not be left empty")
         .isEmail()
-        .withMessage("Please enter a valid email address"),
+        .withMessage("Please enter a valid email address")
+        .exists()
+        .withMessage("This is a required field"),
       check("phone_number")
         .exists()
         .withMessage("This is a required field")
@@ -42,8 +51,7 @@ export default class Validator {
         .withMessage("This field can not be left empty")
         .isLength({ min: 3 })
         .withMessage("Address should be at least 3 letters long")
-        .trim()
-        .escape(),
+        .trim(),
       check("password")
         .exists()
         .withMessage("This is a required field")
@@ -53,12 +61,7 @@ export default class Validator {
         .isLength({ min: 5 })
         .withMessage("Password should be at least 6 letters long")
         .trim()
-        .escape(),
-      check("confirm_password")
-        .exists()
-        .withMessage("This is a required field")
-        .not()
-        .isEmpty()
+        .escape()
     ];
   }
 
